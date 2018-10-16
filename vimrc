@@ -2,6 +2,7 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 let mapleader=";"
 
+"detect file type and use plugin in cording of file type 
 filetype on
 filetype plugin on
 
@@ -47,6 +48,8 @@ set ignorecase
 
 set nocompatible
 
+set wildmenu
+
 set autowrite
 
 set nowrap
@@ -66,11 +69,13 @@ nmap LE $
 nnoremap <Leader>bg <C-Z>
 
 nnoremap nw <C-W><C-W>
-"nnoremap <Leader>lw <C-W>l
-"nnoremap <Leader>hw <C-W>h
-"nnoremap <Leader>jw <C-W>j
-"nnoremap <Leader>kw <C-W>k
-"nnoremap <Leader>
+"nmap <Leader><Leader>lw <C-W>l
+"nmap <Leader><Leader>hw <C-W>h
+"nmap <Leader><Leader>jw <C-W>j
+"nmap <Leader><Leader>kw <C-W>k
+
+nmap <Leader>q :q<CR>
+nmap <Leader>w :w<CR>
 
 nnoremap <Leader>M %
 
@@ -147,8 +152,20 @@ Plugin 'liuchengxu/space-vim-dark' "color scheme
 call vundle#end()
 filetype plugin indent on
 
+
+" Plugin-Config ctrlsf (find content in project)
+let g:ctrlsf_ackprg = 'ack'
+let g:ctrlsf_open_left = 0
+
+
 " Plugin-Config rainbow
 let g:rainbow_active = 1 "enable rainbow
+
+
+" Plugin-Config man function
+source $VIMRUNTIME/ftplugin/man.vim
+nmap <Leader>man :Man 3 <cword><CR>
+
 
 " Plugin-Config colorscheme
 " grey comment
@@ -159,6 +176,7 @@ hi Comment guifg=#5C6370 ctermfg=59
 color space-vim-dark
 set termguicolors
 hi LineNr ctermbg=NONE guibg=NONE
+
 
 " Plugin-Config auto-pairs
 let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"'}
@@ -209,7 +227,7 @@ let g:tagbar_type_cpp = {
 \ }
 
 
-
+"Plugin-Config NERDTree
 "tree visual
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nnoremap <Leader>fl :NERDTreeToggle<CR>
@@ -225,14 +243,11 @@ let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
 
 
+"Plugin-Config MiniBufExploer
 "show buffer tabs and MiniBufExploer
 " 显示/隐藏 MiniBufExplorer 窗口
 map <Leader>bl :MBEToggle<cr>
 " buffer 切换快捷键
 nnoremap <Leader>bn :MBEbn<cr>
 nnoremap <Leader>bp :MBEbp<cr>
-
-
-
-
 
