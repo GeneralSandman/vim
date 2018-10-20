@@ -107,50 +107,83 @@ let g:indent_guides_guide_size=1
 
 " vundle 环境设置
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+"set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
-call vundle#begin()
-Plugin 'fatih/vim-go' "Go Language
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-Plugin 'vim-scripts/phd'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'kshenoy/vim-signature'
-Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/indexer.tar.gz'
-Plugin 'vim-scripts/DfrankUtil'
-Plugin 'vim-scripts/vimprj'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/DrawIt'
-Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'derekwyatt/vim-protodef'
-Plugin 'scrooloose/nerdtree'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'gcmt/wildfire.vim'
-Plugin 'sjl/gundo.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'mhinz/vim-signify' "git
-Plugin 'vim-scripts/a.vim' "switch between header file and source file
-Plugin 'vim-scripts/AutoTag' "update tags file when close file
-Plugin 'luochen1990/rainbow' "rainbow parentheses
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'liuchengxu/space-vim-dark' "color scheme
+
+
+call plug#begin('~/.vim/plugged')
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
+Plug 'fatih/vim-go' "Go Language
+Plug 'VundleVim/Vundle.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+Plug 'vim-scripts/phd'
+Plug 'jiangmiao/auto-pairs'
+Plug 'Lokaltog/vim-powerline'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'kshenoy/vim-signature'
+Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/indexer.tar.gz'
+Plug 'vim-scripts/DfrankUtil'
+Plug 'vim-scripts/vimprj'
+Plug 'dyng/ctrlsf.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'scrooloose/nerdcommenter'
+Plug 'vim-scripts/DrawIt'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/YouCompleteMe'
+Plug 'derekwyatt/vim-protodef'
+Plug 'scrooloose/nerdtree'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'gcmt/wildfire.vim'
+Plug 'sjl/gundo.vim'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'suan/vim-instant-markdown'
+Plug 'mhinz/vim-signify' "git
+Plug 'vim-scripts/a.vim' "switch between header file and source file
+Plug 'vim-scripts/AutoTag' "update tags file when close file
+Plug 'luochen1990/rainbow' "rainbow parentheses
+Plug 'Chiel92/vim-autoformat'
+Plug 'liuchengxu/space-vim-dark' "color scheme
 
 
 "Plugin 'lilydjwg/fcitx.vim'
 " 插件列表结束
-call vundle#end()
+call plug#end()
+
 filetype plugin indent on
+
+
+"Plugin-Config 'vim-gutentags'
+
+" enable gtags module
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" forbid gutentags adding gtags databases
+let g:gutentags_atuo_add_gtags_cscope = 0
+
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
 
 
 " Plugin-Config ctrlsf (find content in project)
@@ -174,8 +207,9 @@ hi Comment guifg=#5C6370 ctermfg=59
 " gui or terminal with true colors enable
 " for example : ubuntu terminal
 color space-vim-dark
-set termguicolors
-hi LineNr ctermbg=NONE guibg=NONE
+set termguicolors " comment this line if pure character mode
+" comment this line if pure character mode
+hi LineNr ctermbg=NONE guibg=NONE 
 
 
 " Plugin-Config auto-pairs
