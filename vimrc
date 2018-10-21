@@ -79,7 +79,7 @@ nmap <Leader>w :w<CR>
 
 nnoremap <Leader>M %
 
-
+" delete gui controler
 set gcr=a:block-blinkon0
 set guioptions-=l
 set guioptions-=L
@@ -87,7 +87,6 @@ set guioptions-=r
 set guioptions-=R
 set guioptions-=m
 set guioptions-=T
-
 
 set laststatus=2
 set ruler
@@ -98,7 +97,6 @@ set nofoldenable
 
 nmap <silent> <Leader>sw :FSHere<cr>
 
-let g:Powerline_colorscheme='solarized256'
 
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_start_level=2
@@ -109,8 +107,6 @@ let g:indent_guides_guide_size=1
 filetype off
 "set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
-
-
 call plug#begin('~/.vim/plugged')
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
@@ -126,7 +122,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'kshenoy/vim-signature'
 Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-Plug 'majutsushi/tagbar'
+"Plug 'majutsushi/tagbar'
+Plug 'w0rp/ale'
 Plug 'vim-scripts/indexer.tar.gz'
 Plug 'vim-scripts/DfrankUtil'
 Plug 'vim-scripts/vimprj'
@@ -149,8 +146,6 @@ Plug 'vim-scripts/AutoTag' "update tags file when close file
 Plug 'luochen1990/rainbow' "rainbow parentheses
 Plug 'Chiel92/vim-autoformat'
 Plug 'liuchengxu/space-vim-dark' "color scheme
-
-
 "Plugin 'lilydjwg/fcitx.vim'
 " 插件列表结束
 call plug#end()
@@ -158,8 +153,60 @@ call plug#end()
 filetype plugin indent on
 
 
-"Plugin-Config 'vim-gutentags'
+"========Plugin-Config ''========
 
+
+"========Plugin-Config 'PowerLine'========
+let g:Powerline_colorscheme='solarized256'
+let g:Powerline_symbols = 'fancy'
+
+
+"========Plugin-Config 'w0rp/ale'========
+let g:ale_sign_column_always = 1
+let g:ale_linters_explicit = 1
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:airline#extensions#ale#enabled = 1
+let g:ale_open_list = 1
+
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
+
+let g:ale_sign_error = "\ue009\ue009"
+let g:ale_sign_warning = '--'
+let g:ale_list_windows_size = 5
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
+
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+
+"使用clang对c和c++进行语法检查，对python使用pylint进行语法检查
+let g:ale_linters = {
+\   'cpp': ['clang'],
+\   'c': ['clang'],
+\   'python': ['pylint'],
+\   'go': ['golint'],
+\   'bash': ['shellcheck'],
+\}
+
+
+"========Plugin-Config 'vim-gutentags'========
 " enable gtags module
 let g:gutentags_modules = ['ctags', 'gtags_cscope']
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
@@ -186,21 +233,21 @@ if !isdirectory(s:vim_tags)
 endif
 
 
-" Plugin-Config ctrlsf (find content in project)
+"========Plugin-Config 'ctrlsf' find content in project========
 let g:ctrlsf_ackprg = 'ack'
 let g:ctrlsf_open_left = 0
 
 
-" Plugin-Config rainbow
+"========Plugin-Config 'rainbow'========
 let g:rainbow_active = 1 "enable rainbow
 
 
-" Plugin-Config man function
+"========Plugin-Config '' man help========
 source $VIMRUNTIME/ftplugin/man.vim
 nmap <Leader>man :Man 3 <cword><CR>
 
 
-" Plugin-Config colorscheme
+"========Plugin-Config 'colorscheme'========
 " grey comment
 colorscheme space-vim-dark
 hi Comment guifg=#5C6370 ctermfg=59
@@ -212,11 +259,11 @@ set termguicolors " comment this line if pure character mode
 hi LineNr ctermbg=NONE guibg=NONE 
 
 
-" Plugin-Config auto-pairs
+"========Plugin-Config 'auto-pairs'========
 let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"'}
 
 
-" Plugin-Config tag
+"========Plugin-Config 'tagbar'========
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边 
 let tagbar_left=1 
 " 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
@@ -261,7 +308,7 @@ let g:tagbar_type_cpp = {
 \ }
 
 
-"Plugin-Config NERDTree
+"========Plugin-Config 'NERDTree'========
 "tree visual
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nnoremap <Leader>fl :NERDTreeToggle<CR>
@@ -277,7 +324,7 @@ let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
 
 
-"Plugin-Config MiniBufExploer
+"========Plugin-Config 'MiniBufExploer'========
 "show buffer tabs and MiniBufExploer
 " 显示/隐藏 MiniBufExplorer 窗口
 map <Leader>bl :MBEToggle<cr>
