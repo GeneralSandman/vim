@@ -32,7 +32,7 @@ set cursorcolumn
 
 set softtabstop=4
 
-set cmdheight=4
+set cmdheight=2
 
 set showmatch
 
@@ -69,13 +69,16 @@ nmap LE $
 nnoremap <Leader>bg <C-Z>
 
 nnoremap nw <C-W><C-W>
-"nmap <Leader><Leader>lw <C-W>l
-"nmap <Leader><Leader>hw <C-W>h
-"nmap <Leader><Leader>jw <C-W>j
-"nmap <Leader><Leader>kw <C-W>k
+nmap <silent> <Leader>lw <C-W>l
+nmap <silent> <Leader>hw <C-W>h
+nmap <silent> <Leader>jw <C-W>j
+nmap <silent> <Leader>kw <C-W>k
 
 nmap <Leader>q :q<CR>
 nmap <Leader>w :w<CR>
+
+nmap <Leader>- :vertical resize +7
+nmap <Leader>+ :vertical resize -7
 
 nnoremap <Leader>M %
 
@@ -97,6 +100,10 @@ set nofoldenable
 
 nmap <silent> <Leader>sw :FSHere<cr>
 
+"delete current word
+nmap <silent> <Leader><Leader>dw daw
+"copy current word
+nmap <silent> <Leader><Leader>yw vey
 
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_start_level=2
@@ -110,7 +117,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
-Plug 'fatih/vim-go' "Go Language
+"Plug 'fatih/vim-go' "Go Language
 Plug 'VundleVim/Vundle.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'tomasr/molokai'
@@ -122,7 +129,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'kshenoy/vim-signature'
 Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-"Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'vim-scripts/indexer.tar.gz'
 Plug 'vim-scripts/DfrankUtil'
@@ -157,6 +164,8 @@ filetype plugin indent on
 
 
 "========Plugin-Config 'PowerLine'========
+set laststatus=2
+let g:neocomplcache_enable_at_startup = 1
 let g:Powerline_colorscheme='solarized256'
 let g:Powerline_symbols = 'fancy'
 
@@ -172,13 +181,14 @@ let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_open_list = 1
+let g:ale_lint_on_enter = 0 "disable ale when we open a new file
 
 let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
 let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
 let g:ale_c_cppcheck_options = ''
 let g:ale_cpp_cppcheck_options = ''
 
-let g:ale_sign_error = "\ue009\ue009"
+let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 let g:ale_list_windows_size = 5
 hi! clear SpellBad
@@ -236,6 +246,7 @@ endif
 "========Plugin-Config 'ctrlsf' find content in project========
 let g:ctrlsf_ackprg = 'ack'
 let g:ctrlsf_open_left = 0
+nnoremap <Leader>fp :CtrlSF<CR>
 
 
 "========Plugin-Config 'rainbow'========
@@ -269,7 +280,7 @@ let tagbar_left=1
 " 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
 nnoremap <Leader>ilt :TagbarToggle<CR> 
 " 设置标签子窗口的宽度 
-let tagbar_width=32 
+let tagbar_width=16 
 " tagbar 子窗口中不显示冗余帮助信息 
 let g:tagbar_compact=1
 " 设置 ctags 对哪些代码标识符生成标签
@@ -313,7 +324,7 @@ let g:tagbar_type_cpp = {
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nnoremap <Leader>fl :NERDTreeToggle<CR>
 " 设置NERDTree子窗口宽度
-let NERDTreeWinSize=32
+let NERDTreeWinSize=16
 " 设置NERDTree子窗口位置
 let NERDTreeWinPos="right"
 " 显示隐藏文件
