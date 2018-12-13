@@ -1,5 +1,7 @@
+"reload vimrc if vimrc have been changed
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
+"leader char
 let mapleader=";"
 
 "detect file type and use plugin in cording of file type 
@@ -14,23 +16,23 @@ set t_Co=256
 
 set scrolloff=10
 
+filetype plugin indent on
+
+"config of tab
 set smarttab
-
-set tabstop=4
-
-set shiftwidth=4
-
 set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 set smartindent
 
 set noswapfile
 
+"currtent line and column
 set cursorline
-
 set cursorcolumn
 
-set softtabstop=4
 
 set cmdheight=2
 
@@ -40,6 +42,7 @@ set showcmd
 
 set autochdir
 
+"helight the result of search
 set hlsearch
 
 set incsearch
@@ -55,31 +58,39 @@ set autowrite
 set nowrap
 
 syntax enable
+syntax on
 "set background=dark
 "colorscheme solarized
 
+"go down and up faster
 nmap J 5j
-
 nmap K 5k
 
-nmap LB 0
-
-nmap LE $
+"jump to begin and end of line
+nmap <Leader>LB 0
+nmap <leader>LE $
 
 nnoremap <Leader>bg <C-Z>
 
-nnoremap nw <C-W><C-W>
-nmap <silent> <Leader>lw <C-W>l
-nmap <silent> <Leader>hw <C-W>h
-nmap <silent> <Leader>jw <C-W>j
-nmap <silent> <Leader>kw <C-W>k
+"skip between splited windows
+nnoremap <Leader>nw <C-W><C-W>
+nnoremap <Leader><Leader>lw <C-W>l
+nnoremap <Leader><Leader>hw <C-W>h
+nnoremap <Leader><Leader>jw <C-W>j
+nnoremap <Leader><Leader>kw <C-W>k
 
+"
 nmap <Leader>q :q<CR>
 nmap <Leader>w :w<CR>
+nmap <Leader>Q :q!<CR>
 
-nmap <Leader>- :vertical resize +7
-nmap <Leader>+ :vertical resize -7
+"modify size of windows
+nmap <Leader>- :vertical resize -7<CR>
+nmap <Leader>= :vertical resize +7<CR>
+nmap <Leader><Leader>- :resize -5<CR>
+nmap <Leader><Leader>= :resize +5<CR>
 
+"jump between matched char {} [] ()
 nnoremap <Leader>M %
 
 " delete gui controler
@@ -103,12 +114,10 @@ nmap <silent> <Leader>sw :FSHere<cr>
 "delete current word
 nmap <silent> <Leader><Leader>dw daw
 "copy current word
-nmap <silent> <Leader><Leader>yw vey
+nmap <silent> <Leader><Leader>yw ebvey
+"insert a empty line and exit insert model
+nmap <silent> <Leader>o o<ESC>
 
-let g:indent_guides_enable_on_vim_startup=1
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
-:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " vundle 环境设置
 filetype off
@@ -126,7 +135,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'Lokaltog/vim-powerline'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'derekwyatt/vim-fswitch'
+"Plug 'derekwyatt/vim-fswitch'
 Plug 'kshenoy/vim-signature'
 Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
 Plug 'majutsushi/tagbar'
@@ -157,17 +166,28 @@ Plug 'liuchengxu/space-vim-dark' "color scheme
 " 插件列表结束
 call plug#end()
 
-filetype plugin indent on
 
 
 "========Plugin-Config ''========
 
 
+"========Plugin-Config 'indent'========
+"zM close fold all block
+"zR fold all block
+
+
+"========Plugin-Config 'vim-indent-guides'========
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+
+
 "========Plugin-Config 'PowerLine'========
 set laststatus=2
+let g:Powerline_symbols = 'fancy'
 let g:neocomplcache_enable_at_startup = 1
 let g:Powerline_colorscheme='solarized256'
-let g:Powerline_symbols = 'fancy'
 
 
 "========Plugin-Config 'w0rp/ale'========
