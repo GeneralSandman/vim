@@ -171,6 +171,40 @@ call plug#end()
 "========Plugin-Config ''========
 
 
+"========Plugin-Config ''========
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsSnippetDirectories=["mysnippets"]
+let g:UltiSnipsExpandTrigger="<Leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+"========Plugin-Config 'autoformat'========
+noremap <Leader>form :Autoformat<CR>
+let g:autoformat_verbosemode=1
+
+
+
+"========Plugin-Config 'YouCompleteMe'========
+"ycm config file
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+" support c++11
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
+
+
 "========Plugin-Config 'indent'========
 "zM close fold all block
 "zR fold all block
@@ -192,6 +226,7 @@ let g:Powerline_colorscheme='solarized256'
 
 "========Plugin-Config 'w0rp/ale'========
 let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
 let g:ale_linters_explicit = 1
 let g:ale_completion_delay = 500
 let g:ale_echo_delay = 20
@@ -202,13 +237,14 @@ let g:ale_lint_on_insert_leave = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_open_list = 1
 let g:ale_lint_on_enter = 0 "disable ale when we open a new file
+let g:ale_list_window_size = 5 "height of error windows
 
 let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++11'
 let g:ale_c_cppcheck_options = ''
 let g:ale_cpp_cppcheck_options = ''
 
-let g:ale_sign_error = '>>'
+let g:ale_sign_error = 'xx'
 let g:ale_sign_warning = '--'
 let g:ale_list_windows_size = 5
 hi! clear SpellBad
